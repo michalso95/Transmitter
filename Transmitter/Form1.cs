@@ -52,8 +52,6 @@ namespace Transmitter
             try { 
             serialPort1.Open();
             progressBar1.Value = 100;
-
-
             start_btn.Enabled = true;
             stop_btn.Enabled = true;
             }
