@@ -39,8 +39,8 @@ namespace Transmitter
             Int16 yaw = (Int16)(yawx * 10.0);
             Int16 pitch = (Int16)(pitchx * 10.0);
             Int16 roll = (Int16)(rollx * 10.0);
-            Int16 lon = (Int16)(lonx * 10000000.0);
-            Int16 lat = (Int16)(latx * 10000000.0);
+            Int64 lon = (Int64)(lonx * 10000000.0);
+            Int64 lat = (Int64)(latx * 10000000.0);
             int state=0;
 
             if (statex == 0) { state = 0; }
@@ -61,18 +61,18 @@ namespace Transmitter
             buf[5] = (Byte)pitch;
             buf[6] = (Byte)(roll >> 8);
             buf[7] = (Byte)roll;
-            buf[8] = (Byte)(lon >> 32);
-            buf[9] = (Byte)(lon >> 24);
-            buf[10] = (Byte)(lon >> 16);
-            buf[11] = (Byte)(lon >> 8);
-            buf[12] = (Byte)lon;
+            buf[8] = (Byte)((UInt64)lon >> 32);
+            buf[9] = (Byte)((UInt64)lon >> 24);
+            buf[10] = (Byte)((UInt64)lon >> 16);
+            buf[11] = (Byte)((UInt64)lon >> 8);
+            buf[12] = (Byte)(UInt64)lon;
             buf[13] = (Byte)(lat >> 32);
             buf[14] = (Byte)(lat >> 24);
             buf[15] = (Byte)(lat >> 16);
             buf[16] = (Byte)(lat >> 8);
             buf[17] = (Byte)lat;
             buf[18] = (Byte)state;
-            UInt16 crc = (Byte)(crc16(buf, 19));
+            Int16 crc = (Int16)(crc16(buf, 19));
             buf[19] = (Byte)(crc >> 8);
             buf[20] = (Byte)crc;
 

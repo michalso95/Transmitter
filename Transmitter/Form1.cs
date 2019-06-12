@@ -35,6 +35,16 @@ namespace Transmitter
         private void start_btn_Click(object sender, EventArgs e)
         {
             timer1.Enabled = true;
+            try
+            {
+                lat = Convert.ToDouble(lat_text.Text);
+                lng = Convert.ToDouble(long_text.Text);
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.ToString());
+            }
+            
         }
 
         private void stop_btn_Click(object sender, EventArgs e)
@@ -73,20 +83,23 @@ namespace Transmitter
         private void timer1_Tick(object sender, EventArgs e)
         {
             Byte[] array;
-            lat = Convert.ToDouble(lat_text.Text);
-            lng = Convert.ToDouble(long_text.Text);
+            
             yaw = yaw_track.Value;
             roll = roll_track.Value ;
             pitch = pitch_track.Value;
             state = Convert.ToInt16(state_num.Value);
 
-            
-            if (serialPort1.IsOpen == true)
-            {
+                if (serialPort1.IsOpen == true)
+                { 
                 array = communication.Com_PrepareFrameGPS(yaw, pitch, roll, lng, lat, state);
                 serialPort1.Write(array, 0, 21);
                 //MessageBox.Show(lat + " " + lng + " " + yaw + " " + roll + " " + pitch + "   ");
-            }
+                 }
+        
+            
+                lat = lat + 0.0001;
+                lng = lng + 0.0001;
+
         }
 
         private void roll_track_Scroll(object sender, EventArgs e)
